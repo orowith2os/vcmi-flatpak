@@ -1,0 +1,30 @@
+app-id: com.github.vcmi.vcmi
+runtime: org.kde.Platform
+runtime-version: '5.15-21.08'
+sdk: org.kde.Sdk
+writable-sdk: true
+command: 
+
+
+modules:
+
+  - name: boost
+    buildsystem: simple
+    build-commands:
+      - ./bootstrap.sh -with-libraries=filesystem,system,thread,locale
+      - ./b2
+      - ./b2 install
+    sources:
+      - type: archive
+        url: https://boostorg.jfrog.io/artifactory/main/release/1.80.0/source/boost_1_80_0.tar.gz
+        sha256: 4b2136f98bdd1f5857f1c3dea9ac2018effe65286cf251534b6ae20cc45e1847
+
+  - name: vcmi
+    buildsystem: simple
+    build-commands:
+      - mkdir build && cd build
+      - cmake ../vcmi
+      - cmake --build .
+    sources:
+      - type: git
+        url: https://github.com/vcmi/vcmi.git
